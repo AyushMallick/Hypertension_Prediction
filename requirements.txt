@@ -54,7 +54,6 @@ opt-einsum==3.3.0
 optree==0.11.0
 packaging==23.2
 pandas==2.2.2
-pandas-profiling==3.2.0
 parso==0.8.3
 pexpect==4.9.0
 phik==0.12.4
