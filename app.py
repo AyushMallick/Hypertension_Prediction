@@ -35,8 +35,8 @@ def index():
 
             return render_template("index.html", prediction=prediction, probability=f"{pred_proba:.2f}")
 
-        #except ValueError:
-            #return render_template("index.html", error="Please enter valid values.")
+        except ValueError:
+            return render_template("index.html", error="Please enter valid values.")
     
     return render_template("index.html")
 
