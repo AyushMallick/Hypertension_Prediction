@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 
 # Load the pre-trained model
-with open('/Users/ayush/Desktop/College/Research/Project/rf_model_updated.pkl', 'rb') as file:
+with open('/models/rf_model_updated.pkl', 'rb') as file:
     model = pickle.load(file)
 
 # Initialize Flask app
