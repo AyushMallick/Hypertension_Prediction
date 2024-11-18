@@ -1,3 +1,4 @@
+'''
 from flask import Flask, render_template, request
 import pickle
 import numpy as np
@@ -42,3 +43,36 @@ def index():
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=80)
+'''
+from flask import Flask, request, jsonify
+import pickle
+import numpy as np
+
+# Initialize Flask app
+app = Flask(__name__)
+
+# Load the trained model
+with open('./models/xgb_model_final.pkl', 'rb') as file:
+    xgb_model = pickle.load(file)
+
+# Route for predicting hypertension
+@app.route('/predict', methods=['POST'])
+def predict():
+    data = request.json
+    features = np.array([data['exang'], data['ca'], data['oldpeak'], data['cp'], data['thalach'], data['thal']]).reshape(1, -1)
+    prediction = xgb_model.predict(features)
+    prediction_proba = xgb_model.predict_proba(features)[0][1]  # Probability of positive case
+
+    response = {
+        'prediction': int(prediction[0]),
+        'probability': prediction_proba
+    }
+    return jsonify(response)
+
+# Home route
+@app.route('/')
+def home():
+    return "Welcome to the Hypertension Prediction API!"
+
+if __name__ == '__main__':
+    app.run(debug=True)
